@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import login, logout, register
+from django.conf.urls import url
+from Auth.views import UserRegisterView, UserLoginView
+from knox import views as knox_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', register),
-    path('login/', login),
-    path('logout/', logout),
+    url('register/', UserRegisterView.as_view()),
+    url('login/', UserLoginView.as_view(), name="user-login"),
+    url('logout/', knox_views.LogoutView.as_view(), name="user-logout"),
+
 ]
